@@ -1,0 +1,147 @@
+0000000000005300 <_ZN8episode114TwoInt32Fields3new17h378cc07728bb96a6E>:
+    5300:	48 83 ec 10          	sub    $0x10,%rsp
+    5304:	89 7c 24 08          	mov    %edi,0x8(%rsp)
+    5308:	89 74 24 0c          	mov    %esi,0xc(%rsp)
+    530c:	89 3c 24             	mov    %edi,(%rsp)
+    530f:	89 74 24 04          	mov    %esi,0x4(%rsp)
+    5313:	8b 04 24             	mov    (%rsp),%eax
+    5316:	8b 54 24 04          	mov    0x4(%rsp),%edx
+    531a:	48 83 c4 10          	add    $0x10,%rsp
+    531e:	c3                   	retq   
+    531f:	90                   	nop
+
+0000000000005320 <_ZN8episode111sum_by_move17h7edbf8043fca28d0E>:
+    5320:	48 83 ec 18          	sub    $0x18,%rsp
+    5324:	89 7c 24 10          	mov    %edi,0x10(%rsp)
+    5328:	89 74 24 14          	mov    %esi,0x14(%rsp)
+    532c:	48 63 c7             	movslq %edi,%rax
+    532f:	48 63 ce             	movslq %esi,%rcx
+    5332:	48 01 c8             	add    %rcx,%rax
+    5335:	0f 90 c2             	seto   %dl
+    5338:	f6 c2 01             	test   $0x1,%dl
+    533b:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+    5340:	75 0a                	jne    534c <_ZN8episode111sum_by_move17h7edbf8043fca28d0E+0x2c>
+    5342:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
+    5347:	48 83 c4 18          	add    $0x18,%rsp
+    534b:	c3                   	retq   
+    534c:	48 8d 3d bd 0c 03 00 	lea    0x30cbd(%rip),%rdi        # 36010 <str.0>
+    5353:	48 8d 15 2e e2 03 00 	lea    0x3e22e(%rip),%rdx        # 43588 <__do_global_dtors_aux_fini_array_entry+0x38>
+    535a:	48 8d 05 0f af 02 00 	lea    0x2af0f(%rip),%rax        # 30270 <_ZN4core9panicking5panic17h5d1c61fed2502a5fE>
+    5361:	be 1c 00 00 00       	mov    $0x1c,%esi
+    5366:	ff d0                	callq  *%rax
+    5368:	0f 0b                	ud2    
+    536a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000005370 <_ZN8episode113sum_by_borrow17hff0a47d911097ef2E>:
+    5370:	48 83 ec 18          	sub    $0x18,%rsp
+    5374:	48 89 7c 24 10       	mov    %rdi,0x10(%rsp)
+    5379:	48 63 07             	movslq (%rdi),%rax
+    537c:	48 63 4f 04          	movslq 0x4(%rdi),%rcx
+    5380:	48 01 c8             	add    %rcx,%rax
+    5383:	0f 90 c2             	seto   %dl
+    5386:	f6 c2 01             	test   $0x1,%dl
+    5389:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+    538e:	75 0a                	jne    539a <_ZN8episode113sum_by_borrow17hff0a47d911097ef2E+0x2a>
+    5390:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
+    5395:	48 83 c4 18          	add    $0x18,%rsp
+    5399:	c3                   	retq   
+    539a:	48 8d 3d 6f 0c 03 00 	lea    0x30c6f(%rip),%rdi        # 36010 <str.0>
+    53a1:	48 8d 15 f8 e1 03 00 	lea    0x3e1f8(%rip),%rdx        # 435a0 <__do_global_dtors_aux_fini_array_entry+0x50>
+    53a8:	48 8d 05 c1 ae 02 00 	lea    0x2aec1(%rip),%rax        # 30270 <_ZN4core9panicking5panic17h5d1c61fed2502a5fE>
+    53af:	be 1c 00 00 00       	mov    $0x1c,%esi
+    53b4:	ff d0                	callq  *%rax
+    53b6:	0f 0b                	ud2    
+    53b8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+    53bf:	00 
+
+00000000000053c0 <_ZN8episode14main17hec53c21fb0d1f45eE>:
+    53c0:	48 81 ec e8 00 00 00 	sub    $0xe8,%rsp
+    53c7:	bf 20 00 00 00       	mov    $0x20,%edi
+    53cc:	be 21 00 00 00       	mov    $0x21,%esi
+    53d1:	e8 2a ff ff ff       	callq  5300 <_ZN8episode114TwoInt32Fields3new17h378cc07728bb96a6E>
+    53d6:	89 54 24 34          	mov    %edx,0x34(%rsp)
+    53da:	89 44 24 30          	mov    %eax,0x30(%rsp)
+    53de:	48 8d 7c 24 30       	lea    0x30(%rsp),%rdi
+    53e3:	e8 88 ff ff ff       	callq  5370 <_ZN8episode113sum_by_borrow17hff0a47d911097ef2E>
+    53e8:	48 89 44 24 38       	mov    %rax,0x38(%rsp)
+    53ed:	8b 7c 24 30          	mov    0x30(%rsp),%edi
+    53f1:	8b 74 24 34          	mov    0x34(%rsp),%esi
+    53f5:	e8 26 ff ff ff       	callq  5320 <_ZN8episode111sum_by_move17h7edbf8043fca28d0E>
+    53fa:	48 89 44 24 40       	mov    %rax,0x40(%rsp)
+    53ff:	48 8d 35 5a f7 02 00 	lea    0x2f75a(%rip),%rsi        # 34b60 <_ZN4core3fmt3num3imp52_$LT$impl$u20$core..fmt..Display$u20$for$u20$i64$GT$3fmt17hd646b38b92e29c9dE>
+    5406:	48 8d 44 24 38       	lea    0x38(%rsp),%rax
+    540b:	48 89 84 24 88 00 00 	mov    %rax,0x88(%rsp)
+    5412:	00 
+    5413:	48 8b 84 24 88 00 00 	mov    0x88(%rsp),%rax
+    541a:	00 
+    541b:	48 89 84 24 d8 00 00 	mov    %rax,0xd8(%rsp)
+    5422:	00 
+    5423:	48 89 c7             	mov    %rax,%rdi
+    5426:	e8 35 fd ff ff       	callq  5160 <_ZN4core3fmt10ArgumentV13new17h7caf317a9ce09dadE>
+    542b:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+    5430:	48 89 54 24 20       	mov    %rdx,0x20(%rsp)
+    5435:	48 8d 05 7c e1 03 00 	lea    0x3e17c(%rip),%rax        # 435b8 <__do_global_dtors_aux_fini_array_entry+0x68>
+    543c:	48 8b 4c 24 28       	mov    0x28(%rsp),%rcx
+    5441:	48 89 4c 24 78       	mov    %rcx,0x78(%rsp)
+    5446:	48 8b 54 24 20       	mov    0x20(%rsp),%rdx
+    544b:	48 89 94 24 80 00 00 	mov    %rdx,0x80(%rsp)
+    5452:	00 
+    5453:	48 8d 74 24 78       	lea    0x78(%rsp),%rsi
+    5458:	48 8d 7c 24 48       	lea    0x48(%rsp),%rdi
+    545d:	48 89 74 24 18       	mov    %rsi,0x18(%rsp)
+    5462:	48 89 c6             	mov    %rax,%rsi
+    5465:	ba 02 00 00 00       	mov    $0x2,%edx
+    546a:	48 8b 4c 24 18       	mov    0x18(%rsp),%rcx
+    546f:	41 b8 01 00 00 00    	mov    $0x1,%r8d
+    5475:	e8 46 fd ff ff       	callq  51c0 <_ZN4core3fmt9Arguments6new_v117h06eebfb8347ef005E>
+    547a:	48 8d 7c 24 48       	lea    0x48(%rsp),%rdi
+    547f:	ff 15 03 07 04 00    	callq  *0x40703(%rip)        # 45b88 <_GLOBAL_OFFSET_TABLE_+0x200>
+    5485:	48 8d 35 d4 f6 02 00 	lea    0x2f6d4(%rip),%rsi        # 34b60 <_ZN4core3fmt3num3imp52_$LT$impl$u20$core..fmt..Display$u20$for$u20$i64$GT$3fmt17hd646b38b92e29c9dE>
+    548c:	48 8d 44 24 40       	lea    0x40(%rsp),%rax
+    5491:	48 89 84 24 d0 00 00 	mov    %rax,0xd0(%rsp)
+    5498:	00 
+    5499:	48 8b 84 24 d0 00 00 	mov    0xd0(%rsp),%rax
+    54a0:	00 
+    54a1:	48 89 84 24 e0 00 00 	mov    %rax,0xe0(%rsp)
+    54a8:	00 
+    54a9:	48 89 c7             	mov    %rax,%rdi
+    54ac:	e8 af fc ff ff       	callq  5160 <_ZN4core3fmt10ArgumentV13new17h7caf317a9ce09dadE>
+    54b1:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+    54b6:	48 89 54 24 08       	mov    %rdx,0x8(%rsp)
+    54bb:	48 8d 05 f6 e0 03 00 	lea    0x3e0f6(%rip),%rax        # 435b8 <__do_global_dtors_aux_fini_array_entry+0x68>
+    54c2:	48 8b 4c 24 10       	mov    0x10(%rsp),%rcx
+    54c7:	48 89 8c 24 c0 00 00 	mov    %rcx,0xc0(%rsp)
+    54ce:	00 
+    54cf:	48 8b 54 24 08       	mov    0x8(%rsp),%rdx
+    54d4:	48 89 94 24 c8 00 00 	mov    %rdx,0xc8(%rsp)
+    54db:	00 
+    54dc:	48 8d b4 24 c0 00 00 	lea    0xc0(%rsp),%rsi
+    54e3:	00 
+    54e4:	48 8d bc 24 90 00 00 	lea    0x90(%rsp),%rdi
+    54eb:	00 
+    54ec:	48 89 34 24          	mov    %rsi,(%rsp)
+    54f0:	48 89 c6             	mov    %rax,%rsi
+    54f3:	ba 02 00 00 00       	mov    $0x2,%edx
+    54f8:	48 8b 0c 24          	mov    (%rsp),%rcx
+    54fc:	41 b8 01 00 00 00    	mov    $0x1,%r8d
+    5502:	e8 b9 fc ff ff       	callq  51c0 <_ZN4core3fmt9Arguments6new_v117h06eebfb8347ef005E>
+    5507:	48 8d bc 24 90 00 00 	lea    0x90(%rsp),%rdi
+    550e:	00 
+    550f:	ff 15 73 06 04 00    	callq  *0x40673(%rip)        # 45b88 <_GLOBAL_OFFSET_TABLE_+0x200>
+    5515:	48 81 c4 e8 00 00 00 	add    $0xe8,%rsp
+    551c:	c3                   	retq   
+    551d:	0f 1f 00             	nopl   (%rax)
+
+0000000000005520 <main>:
+    5520:	48 83 ec 18          	sub    $0x18,%rsp
+    5524:	8a 05 47 57 03 00    	mov    0x35747(%rip),%al        # 3ac71 <__rustc_debug_gdb_scripts_section__>
+    552a:	48 63 cf             	movslq %edi,%rcx
+    552d:	48 8d 3d 8c fe ff ff 	lea    -0x174(%rip),%rdi        # 53c0 <_ZN8episode14main17hec53c21fb0d1f45eE>
+    5534:	48 89 74 24 10       	mov    %rsi,0x10(%rsp)
+    5539:	48 89 ce             	mov    %rcx,%rsi
+    553c:	48 8b 54 24 10       	mov    0x10(%rsp),%rdx
+    5541:	88 44 24 0f          	mov    %al,0xf(%rsp)
+    5545:	e8 26 fd ff ff       	callq  5270 <_ZN3std2rt10lang_start17h2a959aa895bb975dE>
+    554a:	48 83 c4 18          	add    $0x18,%rsp
+    554e:	c3                   	retq   
+    554f:	90                   	nop

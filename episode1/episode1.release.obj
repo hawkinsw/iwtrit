@@ -1,0 +1,62 @@
+0000000000005190 <_ZN8episode14main17hdc47d712d1e3502fE>:
+    5190:	41 57                	push   %r15
+    5192:	41 56                	push   %r14
+    5194:	41 54                	push   %r12
+    5196:	53                   	push   %rbx
+    5197:	48 83 ec 58          	sub    $0x58,%rsp
+    519b:	48 c7 44 24 18 41 00 	movq   $0x41,0x18(%rsp)
+    51a2:	00 00 
+    51a4:	48 c7 44 24 20 41 00 	movq   $0x41,0x20(%rsp)
+    51ab:	00 00 
+    51ad:	48 8d 44 24 18       	lea    0x18(%rsp),%rax
+    51b2:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+    51b7:	4c 8d 35 22 f6 02 00 	lea    0x2f622(%rip),%r14        # 347e0 <_ZN4core3fmt3num3imp52_$LT$impl$u20$core..fmt..Display$u20$for$u20$i64$GT$3fmt17hd646b38b92e29c9dE>
+    51be:	4c 89 74 24 10       	mov    %r14,0x10(%rsp)
+    51c3:	4c 8d 3d fe e3 03 00 	lea    0x3e3fe(%rip),%r15        # 435c8 <anon.37853f6b59c103e49a1bede1b7873eaa.0.llvm.18057211852873682274+0x30>
+    51ca:	4c 89 7c 24 28       	mov    %r15,0x28(%rsp)
+    51cf:	48 c7 44 24 30 02 00 	movq   $0x2,0x30(%rsp)
+    51d6:	00 00 
+    51d8:	48 c7 44 24 38 00 00 	movq   $0x0,0x38(%rsp)
+    51df:	00 00 
+    51e1:	48 8d 5c 24 08       	lea    0x8(%rsp),%rbx
+    51e6:	48 89 5c 24 48       	mov    %rbx,0x48(%rsp)
+    51eb:	48 c7 44 24 50 01 00 	movq   $0x1,0x50(%rsp)
+    51f2:	00 00 
+    51f4:	4c 8d 25 f5 ff 00 00 	lea    0xfff5(%rip),%r12        # 151f0 <_ZN3std2io5stdio6_print17h359e5243b11937baE>
+    51fb:	48 8d 7c 24 28       	lea    0x28(%rsp),%rdi
+    5200:	41 ff d4             	callq  *%r12
+    5203:	48 8d 44 24 20       	lea    0x20(%rsp),%rax
+    5208:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+    520d:	4c 89 74 24 10       	mov    %r14,0x10(%rsp)
+    5212:	4c 89 7c 24 28       	mov    %r15,0x28(%rsp)
+    5217:	48 c7 44 24 30 02 00 	movq   $0x2,0x30(%rsp)
+    521e:	00 00 
+    5220:	48 c7 44 24 38 00 00 	movq   $0x0,0x38(%rsp)
+    5227:	00 00 
+    5229:	48 89 5c 24 48       	mov    %rbx,0x48(%rsp)
+    522e:	48 c7 44 24 50 01 00 	movq   $0x1,0x50(%rsp)
+    5235:	00 00 
+    5237:	48 8d 7c 24 28       	lea    0x28(%rsp),%rdi
+    523c:	41 ff d4             	callq  *%r12
+    523f:	48 83 c4 58          	add    $0x58,%rsp
+    5243:	5b                   	pop    %rbx
+    5244:	41 5c                	pop    %r12
+    5246:	41 5e                	pop    %r14
+    5248:	41 5f                	pop    %r15
+    524a:	c3                   	retq   
+    524b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000005250 <main>:
+    5250:	50                   	push   %rax
+    5251:	48 89 f1             	mov    %rsi,%rcx
+    5254:	48 63 d7             	movslq %edi,%rdx
+    5257:	48 8d 05 32 ff ff ff 	lea    -0xce(%rip),%rax        # 5190 <_ZN8episode14main17hdc47d712d1e3502fE>
+    525e:	48 89 04 24          	mov    %rax,(%rsp)
+    5262:	48 8d 35 2f e3 03 00 	lea    0x3e32f(%rip),%rsi        # 43598 <anon.37853f6b59c103e49a1bede1b7873eaa.0.llvm.18057211852873682274>
+    5269:	48 89 e7             	mov    %rsp,%rdi
+    526c:	ff 15 c6 08 04 00    	callq  *0x408c6(%rip)        # 45b38 <_GLOBAL_OFFSET_TABLE_+0x1a0>
+    5272:	59                   	pop    %rcx
+    5273:	c3                   	retq   
+    5274:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    527b:	00 00 00 
+    527e:	66 90                	xchg   %ax,%ax
