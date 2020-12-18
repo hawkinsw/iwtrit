@@ -1,36 +1,42 @@
 use std::time::SystemTime;
+use volatile::Volatile;
+
 
 // Compare the time it takes to execute 1000000000 iterations
 // of a simple loop using an iterator (for) and counter (while).
-// Increment a counter at each iteration and print the result
-// after the loop concludes in order to keep the compiler from
-// optimizing the loop into oblivion.
-
+// Use a volatile wrapper around the work done in the loop body
+// so that the compiler does not optimize the loop into oblivion.
 fn main() {
-    let mut i = 0;
+    let mut j = 0;
+    let mut v = Volatile::new(&mut j);
 
-    // First, the loop using an iterator.
+    // Call SystemTime::now() to warm up the code path; not doing so
+    // may bias the results toward the second version of the loop.
+    #[allow(unused_assignments)]
     let mut before = SystemTime::now();
-    for _ in 0..1000000000 {
-        i += 1;
-    }
+    #[allow(unused_assignments)]
     let mut after = SystemTime::now();
 
-    print!("i: {}, ", i);
-
-    let duration_iterator = after.duration_since(before);
-
-    // Reset i.
-    i = 0;
-
-    // Second, the loop using a counter.
+    // First, the loop using an iterator.
     before = SystemTime::now();
-    while i < 1000000000 {
-        i += 1;
+    for _ in 0..1000000000 {
+        v.write(v.read() + 1);
     }
     after = SystemTime::now();
 
-    print!("i: {}, ", i);
+    let duration_iterator = after.duration_since(before);
+
+    // Reset j.
+    v.write(0);
+
+    // Second, the loop using a counter.
+    let mut i = 0;
+    before = SystemTime::now();
+    while i < 1000000000 {
+        v.write(v.read() + 1);
+        i += 1;
+    }
+    after = SystemTime::now();
 
     let duration_while = after.duration_since(before);
 
