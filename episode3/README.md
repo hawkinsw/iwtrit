@@ -46,6 +46,8 @@ int main() {
 
 ## Walkthrough
 
+
+### Rust
 ```
     5160:	48 83 ec 04          	sub    $0x4,%rsp
     5164:	c7 04 24 00 00 00 00 	movl   $0x0,(%rsp)
@@ -68,3 +70,33 @@ int main() {
     1153:	48 83 ea 01          	sub    $0x1,%rdx
     1157:	75 ef                	jne    1148 <main+0x68>
 ```
+
+With -funroll-loops
+```
+    1195:	8b 74 24 0c          	mov    0xc(%rsp),%esi
+    1199:	83 c6 01             	add    $0x1,%esi
+    119c:	89 74 24 0c          	mov    %esi,0xc(%rsp)
+    11a0:	44 8b 44 24 0c       	mov    0xc(%rsp),%r8d
+    11a5:	41 83 c0 01          	add    $0x1,%r8d
+    11a9:	44 89 44 24 0c       	mov    %r8d,0xc(%rsp)
+    11ae:	44 8b 4c 24 0c       	mov    0xc(%rsp),%r9d
+    11b3:	41 83 c1 01          	add    $0x1,%r9d
+    11b7:	44 89 4c 24 0c       	mov    %r9d,0xc(%rsp)
+    11bc:	44 8b 54 24 0c       	mov    0xc(%rsp),%r10d
+    11c1:	41 83 c2 01          	add    $0x1,%r10d
+    11c5:	44 89 54 24 0c       	mov    %r10d,0xc(%rsp)
+    11ca:	44 8b 5c 24 0c       	mov    0xc(%rsp),%r11d
+    11cf:	41 83 c3 01          	add    $0x1,%r11d
+    11d3:	44 89 5c 24 0c       	mov    %r11d,0xc(%rsp)
+    11d8:	8b 44 24 0c          	mov    0xc(%rsp),%eax
+    11dc:	83 c0 01             	add    $0x1,%eax
+    11df:	89 44 24 0c          	mov    %eax,0xc(%rsp)
+    11e3:	8b 54 24 0c          	mov    0xc(%rsp),%edx
+    11e7:	83 c2 01             	add    $0x1,%edx
+    11ea:	89 54 24 0c          	mov    %edx,0xc(%rsp)
+    11ee:	8b 74 24 0c          	mov    0xc(%rsp),%esi
+    11f2:	83 c6 01             	add    $0x1,%esi
+    11f5:	89 74 24 0c          	mov    %esi,0xc(%rsp)
+    11f9:	48 83 e9 08          	sub    $0x8,%rcx
+    11fd:	75 96                	jne    1195 <main+0xb5>
+``` 
