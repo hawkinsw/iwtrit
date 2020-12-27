@@ -46,6 +46,8 @@ The assembly code shown below is extracted from `episode3.obj` (`rustc` output) 
 
 ## The Walkthrough
 
+Line-by-line analysis of the assembly code is available in the `-annotated.obj` files in the `episode3` directory of the [IWTRIT](http://www.github.com/hawkinsw/iwtrit/) code.
+
 ### Rust
 
 `rustc` in `release` mode generates the following code for the loop:
@@ -93,32 +95,34 @@ Can we get `g++` to generate better code? Yes! `g++` considers that unrolling a 
 With the `-funroll-loops`, `g++` will perform loop unrolling.
 
 ```
-    1195:	8b 74 24 0c          	mov    0xc(%rsp),%esi
-    1199:	83 c6 01             	add    $0x1,%esi
-    119c:	89 74 24 0c          	mov    %esi,0xc(%rsp)
-    11a0:	44 8b 44 24 0c       	mov    0xc(%rsp),%r8d
-    11a5:	41 83 c0 01          	add    $0x1,%r8d
-    11a9:	44 89 44 24 0c       	mov    %r8d,0xc(%rsp)
-    11ae:	44 8b 4c 24 0c       	mov    0xc(%rsp),%r9d
-    11b3:	41 83 c1 01          	add    $0x1,%r9d
-    11b7:	44 89 4c 24 0c       	mov    %r9d,0xc(%rsp)
-    11bc:	44 8b 54 24 0c       	mov    0xc(%rsp),%r10d
-    11c1:	41 83 c2 01          	add    $0x1,%r10d
-    11c5:	44 89 54 24 0c       	mov    %r10d,0xc(%rsp)
-    11ca:	44 8b 5c 24 0c       	mov    0xc(%rsp),%r11d
-    11cf:	41 83 c3 01          	add    $0x1,%r11d
-    11d3:	44 89 5c 24 0c       	mov    %r11d,0xc(%rsp)
-    11d8:	8b 44 24 0c          	mov    0xc(%rsp),%eax
-    11dc:	83 c0 01             	add    $0x1,%eax
-    11df:	89 44 24 0c          	mov    %eax,0xc(%rsp)
-    11e3:	8b 54 24 0c          	mov    0xc(%rsp),%edx
-    11e7:	83 c2 01             	add    $0x1,%edx
-    11ea:	89 54 24 0c          	mov    %edx,0xc(%rsp)
-    11ee:	8b 74 24 0c          	mov    0xc(%rsp),%esi
-    11f2:	83 c6 01             	add    $0x1,%esi
-    11f5:	89 74 24 0c          	mov    %esi,0xc(%rsp)
-    11f9:	48 83 e9 08          	sub    $0x8,%rcx
-    11fd:	75 96                	jne    1195 <main+0xb5>
+    1098:	8b 44 24 fc          	mov    -0x4(%rsp),%eax
+    109c:	83 c0 01             	add    $0x1,%eax
+    109f:	89 44 24 fc          	mov    %eax,-0x4(%rsp)
+    10a3:	8b 4c 24 fc          	mov    -0x4(%rsp),%ecx
+    10a7:	83 c1 01             	add    $0x1,%ecx
+    10aa:	89 4c 24 fc          	mov    %ecx,-0x4(%rsp)
+    10ae:	8b 74 24 fc          	mov    -0x4(%rsp),%esi
+    10b2:	83 c6 01             	add    $0x1,%esi
+    10b5:	89 74 24 fc          	mov    %esi,-0x4(%rsp)
+    10b9:	8b 7c 24 fc          	mov    -0x4(%rsp),%edi
+    10bd:	83 c7 01             	add    $0x1,%edi
+    10c0:	89 7c 24 fc          	mov    %edi,-0x4(%rsp)
+    10c4:	44 8b 44 24 fc       	mov    -0x4(%rsp),%r8d
+    10c9:	41 83 c0 01          	add    $0x1,%r8d
+    10cd:	44 89 44 24 fc       	mov    %r8d,-0x4(%rsp)
+    10d2:	44 8b 4c 24 fc       	mov    -0x4(%rsp),%r9d
+    10d7:	41 83 c1 01          	add    $0x1,%r9d
+    10db:	44 89 4c 24 fc       	mov    %r9d,-0x4(%rsp)
+    10e0:	44 8b 54 24 fc       	mov    -0x4(%rsp),%r10d
+    10e5:	41 83 c2 01          	add    $0x1,%r10d
+    10e9:	44 89 54 24 fc       	mov    %r10d,-0x4(%rsp)
+    10ee:	44 8b 5c 24 fc       	mov    -0x4(%rsp),%r11d
+    10f3:	41 83 c3 01          	add    $0x1,%r11d
+    10f7:	44 89 5c 24 fc       	mov    %r11d,-0x4(%rsp)
+    10fc:	83 ea 08             	sub    $0x8,%edx
+    10ff:	75 97                	jne    1098 <main+0x18>
 ```
 
-By now, that code should look fairly familiar. Count the number of `add` instructions to determine how many times the loop is unrolled. Find the instruction that decrements the counter variable. Does the number of times the loop is unrolled match the decrement?
+By now, that code should look fairly familiar. For detailed analysis of the code, check out loop-annotated.obj in the source code repository for this episode.
+
+Count the number of `add` instructions to determine how many times the loop is unrolled. Find the instruction that decrements the counter variable. Does the number of times the loop is unrolled match the decrement?

@@ -1,0 +1,86 @@
+; Put 0 into the local `j` 4 bytes into the stack. Notice that this 
+; is done without allocating any space on the stack. This operation is 
+; OK because there is always space on the stack for a leaf function
+; to use. This space is known as the red zone.
+; https://en.wikipedia.org/wiki/Red_zone_(computing). The compiler knows
+; that this is a leaf function because it sees that it contains
+; no function calls.
+    1084:	c7 44 24 fc 00 00 00 	movl   $0x0,-0x4(%rsp)
+    108b:	00 
+
+; The loop is going to count down from its upper limit to 0. Set %edx
+; to hold the upper limit value, 100000000. 
+    108c:	ba 00 e1 f5 05       	mov    $0x5f5e100,%edx
+
+; This instruction is an interesting use of a "no operation".
+; It essentially pushes the operation after it to be at a certain
+; position in memory. This adjustment is important because this 
+; following instruction is the top of the loop. The CPU will jump
+; to this address frequently as the loop is executed. Therefore,
+; the compiler wants to make sure that the instruction is well
+; aligned for quick access.
+    1091:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+; The loop begins.
+; =================
+
+; Load the most recent value of `j` from memory into register
+; %eax.
+    1098:	8b 44 24 fc          	mov    -0x4(%rsp),%eax
+
+; Add one to %eax.
+    109c:	83 c0 01             	add    $0x1,%eax
+
+; Store the updated value back into memory.
+    109f:	89 44 24 fc          	mov    %eax,-0x4(%rsp)
+
+; Repeat exactly except use %ecx, not %eax.
+    10a3:	8b 4c 24 fc          	mov    -0x4(%rsp),%ecx
+    10a7:	83 c1 01             	add    $0x1,%ecx
+    10aa:	89 4c 24 fc          	mov    %ecx,-0x4(%rsp)
+; Repeat exactly except use %esi, not %ecx.
+    10ae:	8b 74 24 fc          	mov    -0x4(%rsp),%esi
+    10b2:	83 c6 01             	add    $0x1,%esi
+    10b5:	89 74 24 fc          	mov    %esi,-0x4(%rsp)
+; Repeat exactly except use %edi, not %esi.
+    10b9:	8b 7c 24 fc          	mov    -0x4(%rsp),%edi
+    10bd:	83 c7 01             	add    $0x1,%edi
+    10c0:	89 7c 24 fc          	mov    %edi,-0x4(%rsp)
+; Repeat exactly except use %edi, not %esi.
+    10c4:	44 8b 44 24 fc       	mov    -0x4(%rsp),%r8d
+    10c9:	41 83 c0 01          	add    $0x1,%r8d
+    10cd:	44 89 44 24 fc       	mov    %r8d,-0x4(%rsp)
+; Repeat exactly except use %edi, not %esi.
+    10d2:	44 8b 4c 24 fc       	mov    -0x4(%rsp),%r9d
+    10d7:	41 83 c1 01          	add    $0x1,%r9d
+    10db:	44 89 4c 24 fc       	mov    %r9d,-0x4(%rsp)
+; Repeat exactly except use %edi, not %esi.
+    10e0:	44 8b 54 24 fc       	mov    -0x4(%rsp),%r10d
+    10e5:	41 83 c2 01          	add    $0x1,%r10d
+    10e9:	44 89 54 24 fc       	mov    %r10d,-0x4(%rsp)
+; Repeat exactly except use %edi, not %esi.
+    10ee:	44 8b 5c 24 fc       	mov    -0x4(%rsp),%r11d
+    10f3:	41 83 c3 01          	add    $0x1,%r11d
+    10f7:	44 89 5c 24 fc       	mov    %r11d,-0x4(%rsp)
+
+; Because the loop was unrolled exactly 8 times (see README.md
+; for what this means), subtract 8 from the loop counter variable).
+    10fc:	83 ea 08             	sub    $0x8,%edx
+
+; The sub operation affects the status register. A "zero flag" is
+; set when any math operation results in 0. The `jne` will jump to
+; the specified address when the flag is not set. In other words,
+; the loop will continue until all 100000000 iterations have occurred.
+    10ff:	75 97                	jne    1098 <main+0x18>
+
+; =================
+; The loop ends.
+
+; We are here after the loop has terminated. %eax holds the return value
+; from a function according to the Linux ABI. to indicate that there is
+; no error in this function, set %eax to 0. Corresponds to the implicit
+; return.
+    1101:	31 c0                	xor    %eax,%eax
+
+; Finally, return to the calling function.
+    1103:	c3                   	retq   

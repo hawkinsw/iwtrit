@@ -1,0 +1,48 @@
+; Make 4 bytes of space on the stack for local variables. In this
+; particular case, this space will be used for `j`.
+    5160:	48 83 ec 04          	sub    $0x4,%rsp
+
+; Initialize `j` to 0.
+    5164:	c7 04 24 00 00 00 00 	movl   $0x0,(%rsp)
+
+; The loop is going to count down from its upper limit to 0. Set %eax
+; to hold the upper limit value, 100000000. 
+    516b:	b8 00 ca 9a 3b       	mov    $0x3b9aca00,%eax
+
+; The loop begins
+; =================
+
+; See the README.md in the episode3 repository for information
+; about loop unrolling, what is happening here.
+
+; Add 1 to `j`.
+    5170:	83 04 24 01          	addl   $0x1,(%rsp)
+; Add 1 to `j`.
+    5174:	83 04 24 01          	addl   $0x1,(%rsp)
+; Add 1 to `j`.
+    5178:	83 04 24 01          	addl   $0x1,(%rsp)
+; Add 1 to `j`.
+    517c:	83 04 24 01          	addl   $0x1,(%rsp)
+; Add 1 to `j`.
+    5180:	83 04 24 01          	addl   $0x1,(%rsp)
+; Hmmm. This loop counter starts at the limit. Therefore, the loop
+; should stop when the counter gets to 0. This instruction *seems*
+; to be adding to the counter. What's going on? `add` adds a signed
+; integer and 0xfffffffb is actually -5. Therefore, this `add` is 
+; really subtracting 5. 
+    5184:	83 c0 fb             	add    $0xfffffffb,%eax
+
+; The add operation affects the status register. A "zero flag" is
+; set when any math operation results in 0. The `jne` will jump to
+; the specified address when the flag is not set. In other words,
+; the loop will continue until all 100000000 iterations have occurred.
+    5187:	75 e7                	jne    5170 <episode3::main+0x10>
+
+; The loop ends
+; =================
+
+; Restore the stack pointer to where it was before the function began.
+    5189:	48 83 c4 04          	add    $0x4,%rsp
+
+; Return from this function.
+    518d:	c3                   	retq   
